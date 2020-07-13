@@ -1,4 +1,4 @@
-let tweet;
+let tweetList;
 
 $.ajax({
     url: 'https://6oxgoe783h.execute-api.us-west-1.amazonaws.com/default/proxyTest',
@@ -13,13 +13,18 @@ $.ajax({
     }
 );
 
-
-
-
 function processData(array) {
-    tweet = array.result;
+    tweetList = array.result;
+    totalRetweets = 0;
     totalFavs = 0;
     for (let i = 0; i < 10; i++) {
-        console.log(totalFavs);
+        totalRetweets += tweetList[i].retweet_count;
+        totalFavs += tweetList[i].favorite_count;
     }
+
+}
+
+function calcVal(totalRetweets, totalFavs) {
+    let totalValue = (totalRetweets * 8) + (totalFavs * .3);
+    console.log(totalValue);
 }
