@@ -13,7 +13,10 @@ $.ajax({ url: 'https://xbt1ufjtw9.execute-api.us-west-1.amazonaws.com/default/tw
 
 
 function processData(array) {
+    totalFavs = 0;
     array.forEach(element => {
-        console.log(element);
+        totalFavs += element.favorite_count;
+
     });
+    console.log(totalFavs);
 }
