@@ -38,12 +38,13 @@ function processData(data) {
     totalFavs = 0;
     for (let i = 0; i < 10; i++) {
         tweetList.push(new tweetObj(data.result[i]));
+        console.log(data.result[i]);
     }
     calcTotalVal(tweetList);
 }
 
 function calcTotalVal(tweetArray) {
-    tweetArray.forEach((element) => {
+    tweetArray.forEach(element => {
         totalValue += element.value;
     });
 }
