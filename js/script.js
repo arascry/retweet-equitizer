@@ -1,6 +1,6 @@
 let tweetList = [];
 let totalValue;
-
+let responseCont;
 class tweetObj {
     retweet_count;
     favorite_count;
@@ -12,7 +12,6 @@ class tweetObj {
         this.favorite_count = tweet.favorite_count;
         this.date = tweet.created_at;
         this.value = calcTotalVal();
-
     }
 
     calcTweetVal() {
@@ -33,11 +32,12 @@ $.ajax({
     }
 );
 
-function processData(array) {
+function processData(data) {
+    responseCont = data;
     totalRetweets = 0;
     totalFavs = 0;
     for (let i = 0; i < 10; i++) {
-        tweetList.push(new tweetObj(array.result[i]));
+        tweetList.push(new tweetObj(data.result[i]));
     }
     calcTotalVal(tweetList);
 }
