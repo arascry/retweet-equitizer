@@ -1,4 +1,20 @@
-let tweetList;
+let tweetList = [];
+let totalValue;
+
+class tweetObj {
+    retweet_count;
+    favorite_count;
+    value;
+    constructor(tweet) {
+        this.retweet_count = tweet.retweet_count;
+        this.favorite_count = tweet.favorite_count;
+        this.value = calcTotalVal();
+    }
+
+    calcTweetVal() {
+        return ((this.retweet_count * 8) + (this.favorite_count * .3)).toFixed(2);
+    }
+}
 
 $.ajax({
     url: 'https://6oxgoe783h.execute-api.us-west-1.amazonaws.com/default/proxyTest',
@@ -14,17 +30,16 @@ $.ajax({
 );
 
 function processData(array) {
-    tweetList = array.result;
     totalRetweets = 0;
     totalFavs = 0;
     for (let i = 0; i < 10; i++) {
-        totalRetweets += tweetList[i].retweet_count;
-        totalFavs += tweetList[i].favorite_count;
+        tweetList.push(new tweetObj(array.result[i]));
     }
-    calcVal(totalRetweets, totalFavs);
+    calcTotalVal(tweetList);
 }
 
-function calcVal(totalRetweets, totalFavs) {
-    let totalValue = (totalRetweets * 8) + (totalFavs * .3);
-    console.log(totalValue);
+function calcTotalVal(tweetArray) {
+    tweetArray.forEach((element) => {
+        totalValue += element.value;
+    });
 }
