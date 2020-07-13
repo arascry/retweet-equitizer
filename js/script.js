@@ -21,7 +21,7 @@ function processData(array) {
         totalRetweets += tweetList[i].retweet_count;
         totalFavs += tweetList[i].favorite_count;
     }
-
+    calcVal(totalRetweets, totalFavs);
 }
 
 function calcVal(totalRetweets, totalFavs) {
