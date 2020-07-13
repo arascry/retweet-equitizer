@@ -4,11 +4,15 @@ let totalValue;
 class tweetObj {
     retweet_count;
     favorite_count;
+    date;
     value;
+
     constructor(tweet) {
         this.retweet_count = tweet.retweet_count;
         this.favorite_count = tweet.favorite_count;
+        this.date = tweet.created_at;
         this.value = calcTotalVal();
+
     }
 
     calcTweetVal() {
