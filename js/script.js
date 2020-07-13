@@ -19,9 +19,7 @@ $.ajax({
 function processData(array) {
     tweet = array.result;
     totalFavs = 0;
-    tweet.forEach(element => {
-        totalFavs += element.favorite_count;
-
-    });
-    console.log(totalFavs);
+    for (let i = 0; i < 10; i++) {
+        console.log(totalFavs);
+    }
 }

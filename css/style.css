@@ -20,7 +20,7 @@ main{
 }
 
 .container{
-    width: 50%;
+    width: 600px;
     height: 550px;
     margin: 0 auto;
     border-radius: 10px;
