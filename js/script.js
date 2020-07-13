@@ -1,7 +1,7 @@
 let tweet;
 
 $.ajax({
-    url: 'https://xbt1ufjtw9.execute-api.us-west-1.amazonaws.com/default/twitterInfo',
+    url: 'https://jalfbcxbce.execute-api.us-west-1.amazonaws.com/default/twitterInfo',
     type: "GET",
     beforeSend: function (xhr) { xhr.setRequestHeader('username', 'lazesummerstone'); }
 }).then(
