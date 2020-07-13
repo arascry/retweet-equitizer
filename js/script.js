@@ -43,8 +43,8 @@ function processData(data) {
     calcTotalVal(tweetList);
 }
 
-function calcTotalVal(tweetArray) {
-    tweetArray.forEach(element => {
+function calcTotalVal(array) {
+    array.forEach(element => {
         totalValue += element.value;
     });
 }
