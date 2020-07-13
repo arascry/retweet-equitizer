@@ -1,6 +1,10 @@
 let tweet;
 
-$.ajax({ url: 'https://xbt1ufjtw9.execute-api.us-west-1.amazonaws.com/default/twitterInfo' }).then(
+$.ajax({
+    url: 'https://xbt1ufjtw9.execute-api.us-west-1.amazonaws.com/default/twitterInfo',
+    type: "GET",
+    beforeSend: function (xhr) { xhr.setRequestHeader('username', 'lazesummerstone'); }
+}).then(
     (data) => {
         processData(data);
     },
@@ -13,6 +17,7 @@ $.ajax({ url: 'https://xbt1ufjtw9.execute-api.us-west-1.amazonaws.com/default/tw
 
 
 function processData(array) {
+    tweet = array;
     totalFavs = 0;
     array.forEach(element => {
         totalFavs += element.favorite_count;
