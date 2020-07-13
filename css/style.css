@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Quantico&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+h1{
+    text-align: center;
+}
+
+body{
+    font-family: 'Quantico', sans-serif;
+    background-color: lightskyblue;
+
+}
+
+main{
+    display: flex;
+    align-content: center;
+}
+
+.container{
+    width: 50%;
+    height: 550px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: navajowhite;
+}
