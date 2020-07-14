@@ -1,10 +1,14 @@
 const $userValue = $('#total-value');
-const $graphCont = $('.container');
+const $graphCont = $('#chart-container');
+const $textCont = $('#text-container');
 const $textInput = $('#user-input');
 
+let username;
 let tweetList;
 let totalValue;
-
+let dates;
+let values;
+var chart;
 class tweetObj {
     retweet_count;
     favorite_count;
@@ -14,12 +18,18 @@ class tweetObj {
     constructor(tweet) {
         this.retweet_count = tweet.retweet_count;
         this.favorite_count = tweet.favorite_count;
-        this.date = new Date(tweet.created_at);
+        this.date = this.formatDate(tweet.created_at);
         this.value = this.calcTweetVal();
     }
-
+    formatDate(created_at) {
+        this.date = new Date(created_at);
+        dates.unshift(this.date.toDateString());
+        return this.date;
+    }
     calcTweetVal() {
-        return (this.retweet_count * 8) + (this.favorite_count * .3);
+        var value = (this.retweet_count * 8) + (this.favorite_count * .3);
+        values.unshift(value);
+        return value;
     }
 }
 
@@ -27,7 +37,7 @@ $('form').on('submit', initTwitterCall);
 
 function initTwitterCall(evt) {
     evt.preventDefault();
-    let username = $textInput.val();
+    username = $textInput.val();
     clearData();
     $.ajax({
         url: 'https://6oxgoe783h.execute-api.us-west-1.amazonaws.com/default/proxyTest',
@@ -44,7 +54,17 @@ function initTwitterCall(evt) {
     $textInput.val('');
 }
 
-
+function clearData() {
+    tweetList = [];
+    dates = [];
+    values = [];
+    totalValue = 0;
+    if (chart) {
+        chart.destroy();
+    }
+    $userValue.empty();
+    $textCont.empty();
+}
 
 function processData(data) {
     totalRetweets = 0;
@@ -64,15 +84,28 @@ function calcTotalVal(array) {
 }
 
 function displayValues(array) {
-    $userValue.append(`<div>Total User Value: $${totalValue}`);
+    $userValue.append(`<div>Total User Value: ${Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalValue)}`);
     array.forEach(element => {
-        $graphCont.append(`<div>Tweet at ${element.date.toDateString()} is valued at $${element.value.toFixed(2)}</div>`);
+        $textCont.append(`<div>Tweet at ${element.date.toDateString()} is valued at $${element.value.toFixed(2)}</div>`);
     });
+
+    chart = new Chart($graphCont[0].getContext('2d'), {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: dates,
+            datasets: [{
+                label: username,
+                data: values
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+
 }
 
-function clearData() {
-    tweetList = [];
-    totalValue = 0;
-    $userValue.empty();
-    $graphCont.empty();
-}
+

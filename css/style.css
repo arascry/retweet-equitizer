@@ -16,6 +16,7 @@ body{
 
 main{
     display: flex;
+    flex-direction: column;
     align-content: center;
 }
 
@@ -23,12 +24,22 @@ footer{
     align-content: center;
 }
 
-.container{
-    width: 600px;
-    height: 550px;
+#chart-container{
+    min-width: 700px;
+    max-width: 700px;
+    max-height: 600px;
     margin: 0 auto;
     border-radius: 10px;
-    background-color: #1da1f2;
+    background-color: white;
+}
+
+#text-container{
+    width: 700px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
 }
 
 .bottom {
