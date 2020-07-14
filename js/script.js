@@ -14,7 +14,7 @@ class tweetObj {
         this.value = this.calcTweetVal();
     }
 
-    calcTweetVal() {
+    #calcTweetVal() {
         return ((this.retweet_count * 8) + (this.favorite_count * .3)).toFixed(2);
     }
 }
@@ -36,7 +36,7 @@ function processData(data) {
     responseCont = data;
     totalRetweets = 0;
     totalFavs = 0;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 10 || i < data.result.length; i++) {
         tweetList.push(new tweetObj(data.result[i]));
         console.log(data.result[i]);
     }
