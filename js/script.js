@@ -1,8 +1,9 @@
-let tweetList = [];
-let totalValue;
-let responseCont;
+const $userValue = $('#total-value');
+const $graphCont = $('.container');
+const $textInput = $('#user-input');
 
-const graphCont = $('.container');
+let tweetList;
+let totalValue;
 
 class tweetObj {
     retweet_count;
@@ -13,7 +14,7 @@ class tweetObj {
     constructor(tweet) {
         this.retweet_count = tweet.retweet_count;
         this.favorite_count = tweet.favorite_count;
-        this.date = tweet.created_at;
+        this.date = new Date(tweet.created_at);
         this.value = this.calcTweetVal();
     }
 
@@ -22,28 +23,37 @@ class tweetObj {
     }
 }
 
-$.ajax({
-    url: 'https://6oxgoe783h.execute-api.us-west-1.amazonaws.com/default/proxyTest',
-    type: "GET",
-    beforeSend: function (xhr) { xhr.setRequestHeader('username', 'fantastic_nick'); }
-}).then(
-    (data) => {
-        processData(data);
-    },
-    (error) => {
-        console.log('Bad Request ' + error);
-    }
-);
+$('form').on('submit', initTwitterCall);
+
+function initTwitterCall(evt) {
+    evt.preventDefault();
+    let username = $textInput.val();
+    clearData();
+    $.ajax({
+        url: 'https://6oxgoe783h.execute-api.us-west-1.amazonaws.com/default/proxyTest',
+        type: "GET",
+        beforeSend: function (xhr) { xhr.setRequestHeader('username', username); }
+    }).then(
+        (data) => {
+            processData(data);
+        },
+        (error) => {
+            console.log('Bad Request ' + error);
+        }
+    );
+    $textInput.val('');
+}
+
+
 
 function processData(data) {
-    responseCont = data;
     totalRetweets = 0;
     totalFavs = 0;
-    for (let i = 0; i < 10 || i < data.result.length; i++) {
-        console.log(i);
+    for (let i = 0; i < 10 && i < data.result.length; i++) {
         tweetList.push(new tweetObj(data.result[i]));
     }
     calcTotalVal(tweetList);
+    displayValues(tweetList)
 }
 
 function calcTotalVal(array) {
@@ -54,7 +64,15 @@ function calcTotalVal(array) {
 }
 
 function displayValues(array) {
+    $userValue.append(`<div>Total User Value: $${totalValue}`);
     array.forEach(element => {
-        graphCont.append(`<div>Tweet at ${element.date} is valued at ${element.value}</div>`);
+        $graphCont.append(`<div>Tweet at ${element.date.toDateString()} is valued at $${element.value.toFixed(2)}</div>`);
     });
+}
+
+function clearData() {
+    tweetList = [];
+    totalValue = 0;
+    $userValue.empty();
+    $graphCont.empty();
 }

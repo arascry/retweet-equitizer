@@ -19,10 +19,29 @@ main{
     align-content: center;
 }
 
+footer{
+    align-content: center;
+}
+
 .container{
     width: 600px;
     height: 550px;
     margin: 0 auto;
     border-radius: 10px;
-    background-color: navajowhite;
+    background-color: #1da1f2;
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
+}
+
+#total-value{
+    height: 40px;
+    padding-bottom: 5px;
+    font-size: 25px;
+    text-align: center;
 }
