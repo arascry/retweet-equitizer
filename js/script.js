@@ -40,6 +40,7 @@ function processData(data) {
     totalRetweets = 0;
     totalFavs = 0;
     for (let i = 0; i < 10 || i < data.result.length; i++) {
+        console.log(i);
         tweetList.push(new tweetObj(data.result[i]));
     }
     calcTotalVal(tweetList);
