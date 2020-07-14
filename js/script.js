@@ -14,7 +14,7 @@ class tweetObj {
         this.value = this.calcTweetVal();
     }
 
-    #calcTweetVal() {
+    calcTweetVal() {
         return (this.retweet_count * 8) + (this.favorite_count * .3);
     }
 }
