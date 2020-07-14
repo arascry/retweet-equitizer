@@ -1,6 +1,9 @@
 let tweetList = [];
 let totalValue;
 let responseCont;
+
+const graphCont = $('.container');
+
 class tweetObj {
     retweet_count;
     favorite_count;
@@ -47,4 +50,10 @@ function calcTotalVal(array) {
         totalValue += element.value;
     });
     totalValue = totalValue.toFixed(2);
+}
+
+function displayValues(array) {
+    array.forEach(element => {
+        graphCont.append(`<div>Tweet at ${element.date} is valued at ${element.value}</div>`);
+    });
 }
