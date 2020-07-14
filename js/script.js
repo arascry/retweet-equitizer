@@ -15,7 +15,7 @@ class tweetObj {
     }
 
     #calcTweetVal() {
-        return ((this.retweet_count * 8) + (this.favorite_count * .3)).toFixed(2);
+        return (this.retweet_count * 8) + (this.favorite_count * .3);
     }
 }
 
@@ -38,7 +38,6 @@ function processData(data) {
     totalFavs = 0;
     for (let i = 0; i < 10 || i < data.result.length; i++) {
         tweetList.push(new tweetObj(data.result[i]));
-        console.log(data.result[i]);
     }
     calcTotalVal(tweetList);
 }
@@ -47,4 +46,5 @@ function calcTotalVal(array) {
     array.forEach(element => {
         totalValue += element.value;
     });
+    totalValue = totalValue.toFixed(2);
 }
