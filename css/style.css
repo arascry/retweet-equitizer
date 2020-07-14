@@ -40,6 +40,7 @@ footer{
     border-radius: 10px;
     background-color: white;
     color: black;
+    overflow-y: scroll;
 }
 
 .bottom {
