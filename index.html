@@ -12,13 +12,35 @@
 </head>
 
 <body>
+    <div id="overlay" onclick="removeOverlay()">
+        <div id="overlay-text">
+            <p>What this is:</p>
+            <p>This web application calculates the value of a given Twitter username based on a couple arbitrary
+                metrics. Using the Twitter API, it searches the inputted user's timeline to find the last 20 original
+                tweets out of 200. For each retweet, that's $8; for each favorite, that's $.20; for each follower,
+                that's
+                $2.50.
+            </p>
+            <p>The graph displays both the daily value (what the day's total tweet values were), and the cumulative
+                total (the user's total value on day 'x').
+            </p>
+            <p>How to use:</p>
+            <p>1.) Add in your desired Twitter username.</p>
+            <p>2.) Click 'Equitize!'</p>
+            <p>3.) Results should populate if the inputted user has made at least one original tweet.</p>
+        </div>
+    </div>
     <header>
         <h1>Twitter Account Valuation!</h1>
         <div id="total-value"></div>
     </header>
+    <nav id="nav-button">
+        Info
+    </nav>
     <main>
-        <canvas id="chart-container" class="container"></canvas>
-        <br>
+        <div class="chart-div">
+            <canvas id="chart-container" class="container"></canvas>
+        </div>
         <div id="text-container" class="container"></div>
     </main>
     <footer>

@@ -42,6 +42,18 @@ class tweetObj {
     }
 }
 
+$(document).ready(displayOverlay);
+
+$('#nav-button').on('click', displayOverlay);
+
+function displayOverlay() {
+    $('#overlay').fadeIn(1000);
+}
+
+function removeOverlay() {
+    $('#overlay').fadeOut(2000);
+}
+
 
 
 
@@ -157,6 +169,7 @@ function displayValues(array) {
 
         // Configuration options go here
         options: {
+            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
                     ticks: {

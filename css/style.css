@@ -4,56 +4,80 @@
     box-sizing: border-box;
 }
 
-h1{
-    text-align: center;
-}
-
 body{
+    display: flex;
+    flex-direction: column;
     font-family: 'Quantico', sans-serif;
     background-color: #15202b;
     color: whitesmoke;
+    margin: 0 auto;
+    text-align: center;
+}
+
+nav {
+    padding: 10px 0px;
 }
 
 main{
     display: flex;
-    flex-direction: column;
-    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-footer{
-    align-content: center;
-}
 
-#chart-container{
+.chart-div {
     min-width: 700px;
-    max-width: 700px;
-    max-height: 600px;
-    margin: 0 auto;
+    min-height: 350px;
+    max-height: 350px;
+    margin: 5px auto;
     border-radius: 10px;
     background-color: white;
 }
 
+.chart-div > canvas {
+    width: 100%;
+    height: 100%;
+}
+
+
+#total-value{
+    height: 40px;
+    font-size: 25px;
+    text-align: center;
+}
+
+
 #text-container{
-    width: 700px;
-    height: 250px;
-    margin: 0 auto;
+    text-align: left;
+    min-width: 700px;
+    min-height: 350px;
+    max-height: 350px;
+    margin: 5px auto;
     border-radius: 10px;
     background-color: white;
     color: black;
     overflow-y: scroll;
 }
 
-.bottom {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 500px;
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    cursor: pointer;
+  }
+
+#overlay-text{
+    width: 40%;
     margin: 0 auto;
+    padding-top: 50px;
+    text-align: left;
 }
 
-#total-value{
-    height: 40px;
-    padding-bottom: 5px;
-    font-size: 25px;
-    text-align: center;
+@media screen and (max-width: 700){
+    body{
+        min-width: 700px;
+    }
 }
