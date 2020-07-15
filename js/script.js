@@ -14,6 +14,7 @@ let avgValues;
 
 let dateValues;
 
+let expose;
 
 var chart;
 
@@ -91,6 +92,7 @@ function processData(data) {
     totalRetweets = 0;
     totalFavs = 0;
     let i = 0;
+    totalValue += data.result[0].user.followers_count * 2.5;
     for (let j = Math.min(data.result.length - 1, 19); j >= 0; j--) {
         masterTweetList.push(new tweetObj(data.result[j]));
         if (dateValues.has(masterTweetList[i].date.toDateString())) {
@@ -114,7 +116,6 @@ function calcTotalVal(array) {
     array.forEach(element => {
         totalValue += element.value;
     });
-    totalValue = totalValue;
 }
 
 
@@ -129,7 +130,7 @@ function displayValues(array, map) {
     map.forEach((value, key) => {
         dates.push(key);
         values.push(value);
-        avgValues.push(values.reduce((a, b) => { return a + b }, 0));
+        avgValues.push(totalValue + values.reduce((a, b) => { return a + b }, 0));
     })
 
 
