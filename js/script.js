@@ -89,22 +89,26 @@ function clearData() {
 
 
 function processData(data) {
-    totalRetweets = 0;
-    totalFavs = 0;
     let i = 0;
-    totalValue += data.result[0].user.followers_count * 2.5;
-    for (let j = Math.min(data.result.length - 1, 19); j >= 0; j--) {
-        masterTweetList.push(new tweetObj(data.result[j]));
-        if (dateValues.has(masterTweetList[i].date.toDateString())) {
-            dateValues.set(masterTweetList[i].date.toDateString(), dateValues.get(masterTweetList[i].date.toDateString()) + masterTweetList[i].value);
-        } else {
-            dateValues.set(masterTweetList[i].date.toDateString(), masterTweetList[i].value);
+
+    if (data.result[0]) {
+        totalValue += data.result[0].user.followers_count * 2.5;
+        for (let j = Math.min(data.result.length - 1, 19); j >= 0; j--) {
+            masterTweetList.push(new tweetObj(data.result[j]));
+            if (dateValues.has(masterTweetList[i].date.toDateString())) {
+                dateValues.set(masterTweetList[i].date.toDateString(), dateValues.get(masterTweetList[i].date.toDateString()) + masterTweetList[i].value);
+            } else {
+                dateValues.set(masterTweetList[i].date.toDateString(), masterTweetList[i].value);
+            }
+            i++;
         }
-        i++;
+
+        calcTotalVals(masterTweetList, dateValues);
+        displayValues(masterTweetList);
+    } else {
+        displayError();
     }
 
-    calcTotalVal(masterTweetList);
-    displayValues(masterTweetList, dateValues);
 }
 
 
@@ -112,7 +116,14 @@ function processData(data) {
 
 
 
-function calcTotalVal(array) {
+function calcTotalVals(array, map) {
+    map.forEach((value, key) => {
+        dates.push(key);
+        values.push(value);
+
+        avgValues.push(totalValue + values.reduce((a, b) => { return a + b }, 0));
+    });
+
     array.forEach(element => {
         totalValue += element.value;
     });
@@ -121,19 +132,11 @@ function calcTotalVal(array) {
 
 
 
-function displayValues(array, map) {
+function displayValues(array) {
     $userValue.append(`<div>Total User Value: ${usdFormatter.format(totalValue)}`);
     array.forEach(element => {
         $textCont.append(`<div>Tweet at ${element.date} is valued at ${usdFormatter.format(element.value)}</div>`);
     });
-
-    map.forEach((value, key) => {
-        dates.push(key);
-        values.push(value);
-        avgValues.push(totalValue + values.reduce((a, b) => { return a + b }, 0));
-    })
-
-
     chart = new Chart($graphCont[0].getContext('2d'), {
         // The type of chart we want to create
         type: 'line',
@@ -169,4 +172,6 @@ function displayValues(array, map) {
 
 }
 
-
+function displayError() {
+    $userValue.append(`No unique tweets for that user!`);
+}
