@@ -6,11 +6,14 @@ const $textInput = $('#user-input');
 const usdFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
 let username;
-let tweetList;
+let masterTweetList;
 let totalValue;
 let dates;
 let values;
 let avgValues;
+
+let dateValues;
+
 
 var chart;
 
@@ -29,13 +32,11 @@ class tweetObj {
 
     formatDate(created_at) {
         this.date = new Date(created_at);
-        dates.unshift(this.date.toDateString());
         return this.date;
     }
 
     calcTweetVal() {
         var value = (this.retweet_count * 8) + (this.favorite_count * .3);
-        values.unshift(value);
         return value;
     }
 }
@@ -71,10 +72,11 @@ function clearData() {
     $userValue.empty();
     $textCont.empty();
 
-    tweetList = [];
+    masterTweetList = [];
     dates = [];
     values = [];
     avgValues = [];
+    dateValues = new Map();
     totalValue = 0;
 
     if (chart) {
@@ -88,35 +90,48 @@ function clearData() {
 function processData(data) {
     totalRetweets = 0;
     totalFavs = 0;
-    for (let i = 0; i < 20 && i < data.result.length; i++) {
-        tweetList.push(new tweetObj(data.result[i]));
+    let i = 0;
+    for (let j = Math.min(data.result.length - 1, 19); j >= 0; j--) {
+        masterTweetList.push(new tweetObj(data.result[j]));
+        if (dateValues.has(masterTweetList[i].date.toDateString())) {
+            dateValues.set(masterTweetList[i].date.toDateString(), dateValues.get(masterTweetList[i].date.toDateString()) + masterTweetList[i].value);
+        } else {
+            dateValues.set(masterTweetList[i].date.toDateString(), masterTweetList[i].value);
+        }
+        i++;
     }
-    tweetList.reverse();
-    calcTotalVal(tweetList);
-    displayValues(tweetList);
+
+    calcTotalVal(masterTweetList);
+    displayValues(masterTweetList, dateValues);
 }
+
+
 
 
 
 
 function calcTotalVal(array) {
     array.forEach(element => {
-        console.log(`Adding ${element.value} to ${totalValue}`);
         totalValue += element.value;
-        avgValues.push(totalValue);
-
     });
-    totalValue = totalValue.toFixed(2);
+    totalValue = totalValue;
 }
 
 
 
 
-function displayValues(array) {
+function displayValues(array, map) {
     $userValue.append(`<div>Total User Value: ${usdFormatter.format(totalValue)}`);
     array.forEach(element => {
-        $textCont.append(`<div>Tweet at ${element.date.toDateString()} is valued at ${usdFormatter.format(element.value)}</div>`);
+        $textCont.append(`<div>Tweet at ${element.date} is valued at ${usdFormatter.format(element.value)}</div>`);
     });
+
+    map.forEach((value, key) => {
+        dates.push(key);
+        values.push(value);
+        avgValues.push(values.reduce((a, b) => { return a + b }, 0));
+    })
+
 
     chart = new Chart($graphCont[0].getContext('2d'), {
         // The type of chart we want to create
@@ -126,12 +141,12 @@ function displayValues(array) {
         data: {
             labels: dates,
             datasets: [{
-                label: username + "'s average value",
-                data: avgValues
+                label: username + "'s daily value",
+                data: values
             },
             {
-                label: username + "'s tweet value",
-                data: values
+                label: username + "'s cumulative value",
+                data: avgValues
             }]
         },
 
