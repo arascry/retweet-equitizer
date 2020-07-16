@@ -141,7 +141,10 @@ function calcTotalVals(array, map) {
 function displayValues(array) {
     $userValue.append(`<div>Total User Value: ${usdFormatter.format(totalValue)}`);
     array.forEach(element => {
-        $textCont.append(`<div>Tweet at ${element.date} is valued at ${usdFormatter.format(element.value)}</div>`);
+        $textCont.append(`<div id="text-row"><div id="date">${element.date.toDateString()}</div>
+                          <div id="divider">=></div>
+                          <div id="value">${usdFormatter.format(element.value)}</div>
+                          </div>`);
     });
     chart = new Chart($graphCont[0].getContext('2d'), {
         type: 'line',
@@ -150,11 +153,15 @@ function displayValues(array) {
             labels: dates,
             datasets: [{
                 label: username + "'s daily value",
-                data: values
+                data: values,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)'
             },
             {
                 label: username + "'s cumulative value",
-                data: avgValues
+                data: avgValues,
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)'
             }]
         },
 

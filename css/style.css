@@ -8,7 +8,7 @@ body{
     display: flex;
     flex-direction: column;
     font-family: 'Quantico', sans-serif;
-    background-color: #293d52;
+    background-color: #1e344b;
     color: whitesmoke;
     margin: 0 auto;
     text-align: center;
@@ -19,17 +19,10 @@ nav {
     cursor: pointer;
 }
 
-main{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-
 .chart-div {
     min-width: 700px;
     min-height: 350px;
+    max-width: 700px;
     max-height: 350px;
     margin: 5px auto;
     border-radius: 10px;
@@ -48,17 +41,41 @@ main{
     text-align: center;
 }
 
+#text-header{
+    display: grid;
+    width: 700px;
+    margin: 0 auto;
+    grid-template-columns: 150px 50px 150px;
+    text-align: left;
+    padding-left: 10px;
+}
 
 #text-container{
+    display: flex;
+    flex-direction: column;
     text-align: left;
-    min-width: 700px;
-    min-height: 350px;
-    max-height: 350px;
+    width: 700px;
+    height: 150px;
+    padding: 10px;
     margin: 5px auto;
     border-radius: 10px;
     background-color: white;
     color: black;
     overflow-y: scroll;
+}
+
+#text-row{
+    display: grid;
+    grid-template-columns: 150px 50px 150px;
+}
+
+#divider{
+    text-align: center;
+    grid-row: span 1;
+}
+
+#value{
+    grid-row: span 1;
 }
 
 #overlay {
@@ -75,10 +92,4 @@ main{
     margin: 0 auto;
     padding-top: 50px;
     text-align: left;
-}
-
-@media screen and (max-width: 700){
-    body{
-        min-width: 700px;
-    }
 }
