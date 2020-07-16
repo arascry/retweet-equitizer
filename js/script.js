@@ -51,7 +51,7 @@ function displayOverlay() {
 }
 
 function removeOverlay() {
-    $('#overlay').fadeOut(2000);
+    $('#overlay').fadeOut(1000);
 }
 
 
